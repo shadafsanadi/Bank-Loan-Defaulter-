@@ -1,0 +1,100 @@
+---
+# Home Loan Default Prediction — Model Configuration
+# All tuneable parameters live here. Never hardcode values in source files.
+
+# ── Data ──────────────────────────────────────────────────────────────────────
+data:
+  raw_dir: "data/raw"
+  processed_dir: "data/processed"
+  high_missing_threshold: 0.40        # Drop columns with more missing than this
+  outlier_cap_percentile: 99          # Cap numeric outliers at this percentile
+  test_size: 0.15
+  random_state: 42
+
+# ── Class imbalance ───────────────────────────────────────────────────────────
+# Computed as n_negative / n_positive ≈ 307511 * 0.919 / 307511 * 0.081 ≈ 11.3
+scale_pos_weight: 11
+
+# ── Cross-validation ──────────────────────────────────────────────────────────
+cv:
+  n_splits: 5
+  shuffle: true
+  random_state: 42
+
+# ── Models ────────────────────────────────────────────────────────────────────
+logistic_regression:
+  C: 0.01
+  max_iter: 1000
+
+random_forest:
+  n_estimators: 300
+  max_depth: 10
+  min_samples_leaf: 50
+  n_jobs: -1
+
+xgboost:
+  n_estimators: 1000
+  max_depth: 6
+  learning_rate: 0.05
+  subsample: 0.8
+  colsample_bytree: 0.8
+  min_child_weight: 5
+  gamma: 0.1
+  reg_alpha: 0.1
+  reg_lambda: 1.0
+  early_stopping_rounds: 50
+  eval_metric: "auc"
+  tree_method: "hist"
+  n_jobs: -1
+
+lightgbm:
+  n_estimators: 1000
+  learning_rate: 0.05
+  num_leaves: 63
+  max_depth: -1
+  min_child_samples: 50
+  subsample: 0.8
+  colsample_bytree: 0.8
+  reg_alpha: 0.1
+  reg_lambda: 1.0
+  early_stopping_rounds: 50
+  n_jobs: -1
+  verbose: -1
+
+catboost:
+  iterations: 1000
+  learning_rate: 0.05
+  depth: 6
+  l2_leaf_reg: 3.0
+  early_stopping_rounds: 50
+  verbose: 0
+
+# ── Threshold optimisation ────────────────────────────────────────────────────
+# beta < 1 = favour precision (fewer false positives)
+# beta > 1 = favour recall (fewer missed defaults)
+# Banking standard: missing a default costs ~5x more than rejecting a good applicant
+threshold:
+  metric: "fbeta"
+  beta: 2.0                           # Recall-weighted: catching defaults is 2x more important
+  min_recall: 0.70                    # Hard floor: must catch at least 70% of defaults
+
+# ── Model artifacts ───────────────────────────────────────────────────────────
+artifacts:
+  version: "v2"
+  models_dir: "models"
+  pipeline_filename: "pipeline.pkl"
+  feature_names_filename: "feature_names.pkl"
+  metadata_filename: "metadata.json"
+
+# ── Hyperparameter tuning (Optuna) ────────────────────────────────────────────
+tuning:
+  n_trials: 100
+  timeout_seconds: 3600               # 1 hour max
+  direction: "maximize"
+  metric: "roc_auc"
+
+# ── Logging ───────────────────────────────────────────────────────────────────
+logging:
+  level: "INFO"
+  format: "%(asctime)s | %(name)s | %(levelname)s | %(message)s"
+  log_file: "logs/training.log"

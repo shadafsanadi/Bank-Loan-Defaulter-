@@ -1,0 +1,13 @@
+data/raw/
+data/processed/
+notebooks/
+.git/
+.github/
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+logs/
+*.log
+.env
+models/v1/

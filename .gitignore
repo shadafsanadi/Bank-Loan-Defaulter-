@@ -1,0 +1,62 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb
+
+# Data — large CSVs never committed; download from Kaggle
+data/raw/
+data/processed/
+
+# Model artifacts — large binaries; download or retrain locally
+models/v1/*.pkl
+models/v2/*.pkl
+
+# Keep metadata so results are visible in repo
+!models/v2/metadata.json
+!models/v1/metadata.json
+
+# Logs
+logs/
+*.log
+
+# Environment
+.env
+.env.*
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Pytest
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Outputs — keep plots, ignore large files
+outputs/
+!outputs/plots/*.png
+!outputs/feature_importance.csv
+!outputs/model_comparison.csv
+
+# Claude Code internals
+.claude/
+
+# CatBoost temp directory
+catboost_info/
+
+# Old misnamed gitignore (replaced by .gitignore)
+gitignore

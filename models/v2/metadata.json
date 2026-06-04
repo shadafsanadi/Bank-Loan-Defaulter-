@@ -1,0 +1,48 @@
+{
+  "model_name": "xgboost",
+  "trained_at": "2026-06-04T15:58:05.739733",
+  "test_roc_auc": 0.7864,
+  "test_pr_auc": 0.2897,
+  "cv_roc_auc_mean": 0.7773,
+  "cv_roc_auc_std": 0.0038,
+  "n_features": 244,
+  "n_train_rows": 261380,
+  "default_rate": 0.0807,
+  "model_comparison": [
+    {
+      "model": "xgboost",
+      "cv_auc_mean": 0.7773,
+      "cv_auc_std": 0.0038,
+      "cv_auc_min": 0.773,
+      "cv_auc_max": 0.7823
+    },
+    {
+      "model": "lightgbm",
+      "cv_auc_mean": 0.7748,
+      "cv_auc_std": 0.0042,
+      "cv_auc_min": 0.7699,
+      "cv_auc_max": 0.7802
+    },
+    {
+      "model": "logistic_regression",
+      "cv_auc_mean": 0.7682,
+      "cv_auc_std": 0.0043,
+      "cv_auc_min": 0.7621,
+      "cv_auc_max": 0.7731
+    },
+    {
+      "model": "random_forest",
+      "cv_auc_mean": 0.7578,
+      "cv_auc_std": 0.0045,
+      "cv_auc_min": 0.7518,
+      "cv_auc_max": 0.763
+    },
+    {
+      "model": "catboost",
+      "cv_auc_mean": NaN,
+      "cv_auc_std": NaN,
+      "cv_auc_min": NaN,
+      "cv_auc_max": NaN
+    }
+  ]
+}
