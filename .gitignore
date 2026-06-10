@@ -52,7 +52,7 @@ outputs/
 !outputs/feature_importance.csv
 !outputs/model_comparison.csv
 
-# Claude Code internals
+# Local agent/editor internals
 .claude/
 
 # CatBoost temp directory
